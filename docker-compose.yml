@@ -1,0 +1,12 @@
+version: "3.9"
+
+services:
+  go-app:
+    image: golang:1.24
+    container_name: go-app-dev
+    working_dir: /usr/src/app
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/usr/src/app
+    command: go run server.go
