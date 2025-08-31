@@ -7,7 +7,6 @@ package graph
 import (
 	"GraphQL/graph/model"
 	"context"
-	"fmt"
 )
 
 // Courses is the resolver for the courses field.
@@ -33,7 +32,17 @@ func (r *categoryResolver) Courses(ctx context.Context, obj *model.Category) ([]
 
 // Category is the resolver for the category field.
 func (r *courseResolver) Category(ctx context.Context, obj *model.Course) (*model.Category, error) {
-	panic(fmt.Errorf("not implemented: Category - category"))
+	category, err := r.CategoryDB.FindByCourseId(obj.ID)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &model.Category{
+		ID:          category.ID,
+		Name:        category.Name,
+		Description: &category.Description,
+	}, nil
 }
 
 // CreateCategory is the resolver for the createCategory field.
